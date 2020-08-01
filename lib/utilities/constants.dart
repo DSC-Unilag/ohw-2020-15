@@ -1,0 +1,1 @@
+const String appName = 'Examination on Mobile';
