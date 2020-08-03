@@ -1,11 +1,33 @@
+import 'package:ExaminationAppOHW20/views/attempt/start_attempt.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'review_questions.dart';
 import '../../utilities/style.dart' as Style;
 import '../../utilities/app_widgets.dart';
 
 class ExamPageScreen extends StatelessWidget {
-  final bool isStudent = false;
+  final bool isStudent = true;
   final bool isOpened = true;
-  final bool hasAttempt = true;
+  final bool hasAttempt = false;
+
+  reviewQuestions(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => ReviewExamQuestionsScreen(),
+      ),
+    );
+  }
+
+  startAttempt(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => StartAttemptScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +115,11 @@ class ExamPageScreen extends StatelessWidget {
                     ExamDataCard(),
                     if (!isStudent) ExamInstructionsCard(),
                     if (isStudent && !hasAttempt)
-                      ContinueButton(label: 'Start Attempt', onTap: null),
+                      ContinueButton(
+                          label: 'Start Attempt',
+                          onTap: () {
+                            startAttempt(context);
+                          }),
                     if (isStudent && hasAttempt)
                       ContinueButton(label: 'Review Attempt', onTap: null),
                     if (!isStudent)
@@ -102,7 +128,9 @@ class ExamPageScreen extends StatelessWidget {
                         children: <Widget>[
                           SmallButton(
                             label: 'Questions',
-                            onTap: () {},
+                            onTap: () {
+                              reviewQuestions(context);
+                            },
                             icon: Icons.edit,
                           ),
                           SmallButton(

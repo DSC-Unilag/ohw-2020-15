@@ -140,12 +140,14 @@ class SmallButton extends StatelessWidget {
   final String label;
   final Function onTap;
   final IconData icon;
+  final bool reverseIcon;
 
   const SmallButton(
       {Key key,
       @required this.label,
       @required this.onTap,
-      @required this.icon})
+      @required this.icon,
+      this.reverseIcon = false})
       : super(key: key);
 
   @override
@@ -170,6 +172,7 @@ class SmallButton extends StatelessWidget {
             icon,
             color: Style.themeWhite,
             size: 18,
+            textDirection: !reverseIcon ? TextDirection.ltr : TextDirection.rtl,
           )
         ],
       ),
@@ -702,47 +705,105 @@ class ExamSolutionTile extends StatelessWidget {
   }
 }
 
-class ExaminerQuestionWidget extends StatelessWidget {
+class QuestionWidgetReview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
         onPressed: () {},
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               '1',
               style: Style.body2Green,
             ),
-            Column(
-              children: <Widget>[
-                Text(
-                  "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-                  style: Style.body2.copyWith(fontWeight: FontWeight.w300),
-                ),
-                Row(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text("A.  Option 1"),
-                        Text("B.  Option 2"),
-                        Text("C.  Option 3"),
-                      ],
+            SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(
+                      width: double.maxFinite,
                     ),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      alignment: WrapAlignment.end,
-                      runAlignment: WrapAlignment.end,
-                      children: <Widget>[
-                        ExamSolutionTile('B', isAnswer: true),
-                        ExamSolutionTile('D', isAnswer: true),
-                      ],
+                    child: Text(
+                      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                      style: Style.body2.copyWith(fontWeight: FontWeight.w300),
                     ),
-                  ],
-                )
-              ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            for (int i = 0; i < 3; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0),
+                                child: Text(
+                                  "A.  Option 1",
+                                  style: Style.body3Bold,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          alignment: WrapAlignment.end,
+                          runAlignment: WrapAlignment.end,
+                          crossAxisAlignment: WrapCrossAlignment.end,
+                          children: <Widget>[
+                            ExamSolutionTile('B', isAnswer: true),
+                            ExamSolutionTile('D', isAnswer: true),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ));
+  }
+}
+
+class AppNotification extends StatelessWidget {
+  final String heading;
+  final String body;
+
+  const AppNotification({@required this.heading, @required this.body});
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '$heading',
+            style: Style.body2.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.w300,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 16),
+          Text(
+            '$body',
+            style: Style.body3,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }
