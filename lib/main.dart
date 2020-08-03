@@ -14,6 +14,10 @@ class ExamApp extends StatelessWidget {
       home: SplashScreen(),
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Style.mainBackgroundColor,
+        primaryColor: Style.themeGreen,
+        accentColor: Style.themeGreenLight,
+        secondaryHeaderColor: Style.themeGreen,
+        splashColor: Style.themeGreenLight,
       ),
     );
   }

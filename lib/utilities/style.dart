@@ -96,3 +96,16 @@ final smallButtonTextStyle = GoogleFonts.lato(
   fontWeight: FontWeight.w500,
   color: textWhiteColor,
 );
+
+class OhwExamAppIcons {
+  OhwExamAppIcons._();
+
+  static const _kFontFam = 'OhwExamAppIcons';
+  static const _kFontPkg = null;
+
+  static const IconData ohwExamAppIcon = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+}
