@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../dashboard.dart';
+import '../authentication/sign_up.dart';
 import '../../utilities/style.dart' as Style;
 
 class OnboardingScreen extends StatefulWidget {
@@ -12,11 +12,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int page = 0;
 
-  navigateToSignUp(BuildContext context) {
+  _gotoSignUpScreen(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => Dashboard(),
+        builder: (_) => SignUpScreen(),
       ),
     );
   }
@@ -34,7 +34,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  _gotoSignUpScreen(context);
+                },
                 constraints: BoxConstraints.tightFor(width: 48, height: 40),
                 child: Text(
                   'Skip',
@@ -101,12 +103,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       bottom: 0,
                       top: 0,
                       width: 56,
-                      child: IconButton(
-                          icon: Icon(
+                      child: FlatButton(
+                          child: Icon(
                             Icons.keyboard_backspace,
                             color: Style.themeBlack,
                             textDirection: TextDirection.rtl,
                           ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          color: Style.themeWhite,
                           onPressed: () {
                             if (_pageController.page <
                                 onboardingTexts.length - 1) {
@@ -115,7 +121,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 curve: Curves.easeInExpo,
                               );
                             } else {
-                              navigateToSignUp(context);
+                              _gotoSignUpScreen(context);
                             }
                           }),
                     ),

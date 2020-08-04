@@ -5,7 +5,7 @@ import '../../utilities/app_widgets.dart';
 import '../../utilities/style.dart' as Style;
 
 class MakeAttemptScreen extends StatelessWidget {
-  goToReviewAttempt(BuildContext context) {
+  _goToReviewAttempt(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
@@ -94,7 +94,7 @@ class MakeAttemptScreen extends StatelessWidget {
             SmallButton(
               label: 'Next',
               onTap: () {
-                goToReviewAttempt(context);
+                _goToReviewAttempt(context);
               },
               icon: Icons.keyboard_backspace,
               reverseIcon: true,

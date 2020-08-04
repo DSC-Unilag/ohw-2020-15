@@ -75,6 +75,7 @@ final body2 = GoogleFonts.lato(
 final body2Grey = body2.copyWith(color: textGreyColor);
 final body2Green = body2.copyWith(color: themeGreen);
 final body2Bold = body2.copyWith(fontWeight: FontWeight.w700);
+final body2Light = body2.copyWith(fontWeight: FontWeight.w100);
 
 final body3 = GoogleFonts.lato(
   fontSize: 12,

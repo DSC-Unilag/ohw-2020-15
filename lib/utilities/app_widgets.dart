@@ -144,6 +144,33 @@ class ContinueButton extends StatelessWidget {
   }
 }
 
+class BigButton extends StatelessWidget {
+  final String label;
+  final Function onTap;
+
+  const BigButton({Key key, @required this.label, @required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onTap,
+      elevation: 0,
+      constraints: BoxConstraints.tight(Size.fromHeight(40)),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      fillColor: Style.themeGreen,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Text(
+        '$label',
+        style: Style.bigButtonTextStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
 class SmallButton extends StatelessWidget {
   final String label;
   final Function onTap;
@@ -302,6 +329,74 @@ class RegularLabelTextField extends StatelessWidget {
   }
 }
 
+class PasswordField extends StatefulWidget {
+  final TextEditingController controller;
+  final Function validator;
+  final String label;
+  final String hint;
+
+  const PasswordField({
+    Key key,
+    this.controller,
+    this.validator,
+    this.label,
+    this.hint,
+  });
+
+  @override
+  _PasswordFieldState createState() => _PasswordFieldState();
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  bool obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16.0),
+      child: TextFormField(
+        obscureText: obscure,
+        cursorColor: Style.themeBlue,
+        style: Style.body2.copyWith(letterSpacing: obscure ? 4 : 0),
+        decoration: InputDecoration(
+          suffixIconConstraints: BoxConstraints.tightFor(height: 32),
+          suffixIcon: IconButton(
+            icon: Icon(
+              // Based on passwordVisible state choose the icon
+              obscure ? Icons.visibility_off : Icons.visibility,
+              color: Style.themeGreen,
+              size: 18,
+            ),
+            onPressed: () {
+              setState(() {
+                obscure = !obscure;
+              });
+            },
+          ),
+          labelText: widget.label,
+          labelStyle: Style.fieldLabelTextStyle,
+          hintText: widget.hint,
+          hintStyle: Style.fieldHintTextStyle,
+          contentPadding: const EdgeInsets.fromLTRB(0, 4, 16, 4),
+          isDense: true,
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Style.themeGreen,
+              width: 0.3,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Style.themeGreen,
+              width: 1,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class GenericInputHolder extends StatelessWidget {
   final String inputLabel;
   final Widget child;
@@ -406,13 +501,14 @@ class CustomCheckBox extends StatefulWidget {
   final Function(bool value) onChanged;
 
   const CustomCheckBox(
-      {@required this.initialValue, this.onChanged, this.choice});
+      {Key key, @required this.initialValue, this.onChanged, this.choice})
+      : super(key: key);
 
   @override
-  _CustomCheckBoxState createState() => _CustomCheckBoxState();
+  CustomCheckBoxState createState() => CustomCheckBoxState();
 }
 
-class _CustomCheckBoxState extends State<CustomCheckBox> {
+class CustomCheckBoxState extends State<CustomCheckBox> {
   bool value = false;
   @override
   void initState() {
@@ -420,14 +516,18 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
     value = widget.initialValue;
   }
 
+  toggleValue() {
+    setState(() {
+      value = !value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          value = !value;
-          if (widget.onChanged != null) widget.onChanged(value);
-        });
+        toggleValue();
+        if (widget.onChanged != null) widget.onChanged(value);
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

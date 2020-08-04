@@ -5,7 +5,7 @@ import '../../utilities/app_widgets.dart';
 import '../../utilities/style.dart' as Style;
 
 class StartAttemptScreen extends StatelessWidget {
-  initializeAttempt(BuildContext context) {
+  _initializeAttempt(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
@@ -102,7 +102,7 @@ class StartAttemptScreen extends StatelessWidget {
               ContinueButton(
                 label: 'Begin',
                 onTap: () {
-                  initializeAttempt(context);
+                  _initializeAttempt(context);
                 },
               ),
             ],

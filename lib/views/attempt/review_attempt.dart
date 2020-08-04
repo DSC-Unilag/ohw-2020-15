@@ -5,7 +5,7 @@ import '../../utilities/app_widgets.dart';
 import '../../utilities/style.dart' as Style;
 
 class ReviewAttemptScreen extends StatelessWidget {
-  saveAttempt(BuildContext context) {
+  _saveAttempt(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
@@ -94,7 +94,7 @@ class ReviewAttemptScreen extends StatelessWidget {
         child: ContinueButton(
           label: 'Submit your attempt',
           onTap: () {
-            saveAttempt(context);
+            _saveAttempt(context);
           },
         ),
       ),

@@ -3,6 +3,9 @@ import '../../utilities/style.dart' as Style;
 import '../../utilities/app_widgets.dart';
 
 class AddQuestionsScreen extends StatelessWidget {
+  final GlobalKey<CustomCheckBoxState> singleAnswerOption = GlobalKey();
+  final GlobalKey<CustomCheckBoxState> multipleAnswerOption = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,13 +59,21 @@ class AddQuestionsScreen extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         CustomCheckBox(
+                          key: singleAnswerOption,
                           initialValue: true,
                           choice: 'Single Answer',
+                          onChanged: (newVal) {
+                            multipleAnswerOption.currentState.toggleValue();
+                          },
                         ),
                         Spacer(),
                         CustomCheckBox(
+                          key: multipleAnswerOption,
                           initialValue: false,
                           choice: 'Multiple Answers',
+                          onChanged: (newVal) {
+                            singleAnswerOption.currentState.toggleValue();
+                          },
                         ),
                         Spacer(),
                       ],
@@ -141,8 +152,6 @@ class AddQuestionsScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 class ExamOptionInput extends StatelessWidget {
   final String count;
