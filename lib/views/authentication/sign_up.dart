@@ -98,9 +98,8 @@ class SignUpScreen extends StatelessWidget {
                         //TODO: create with input data
                         User newAccount = User();
                         AuthController _authController = AuthController();
-                        OperationStatus status =
-                            await _authController.createNewAccount(newAccount);
-
+                        OperationStatus status = await _authController
+                            .createNewAccount(context, newAccount);
                         if (status == OperationStatus.success)
                           _gotoSuccesfulSignUpScreen(context);
                       }

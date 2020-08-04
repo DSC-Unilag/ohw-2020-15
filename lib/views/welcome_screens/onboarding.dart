@@ -131,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         right: 120 + (i * 26).toDouble(),
                         child: Container(
                           width: 10,
-                          height: 10,
+                          height: 9,
                           color: Style.themeGrey,
                         ),
                       ),

@@ -1,3 +1,5 @@
 class User {
-  Map<String, dynamic> toJson() {}
+  Map<String, dynamic> toJson() {
+    return {};
+  }
 }

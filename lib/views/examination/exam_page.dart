@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ExaminationAppOHW20/views/attempt/start_attempt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +8,10 @@ import '../../utilities/style.dart' as Style;
 import '../../utilities/app_widgets.dart';
 
 class ExamPageScreen extends StatelessWidget {
-  final bool isStudent = true;
-  final bool isOpened = true;
-  final bool hasAttempt = false;
+  // static bool d = Random().nextBool();
+  final bool isStudent = Random().nextBool();
+  final bool isOpened = Random().nextBool();
+  final bool hasAttempt = Random().nextBool();
 
   reviewQuestions(BuildContext context) {
     Navigator.push(

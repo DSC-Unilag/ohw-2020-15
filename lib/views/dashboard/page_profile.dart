@@ -14,7 +14,6 @@ class ProfilePage extends StatelessWidget {
         SizedBox(height: 24),
         Expanded(
           child: Container(
-            color: Colors.cyan,
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Center(
               child: FlatButton(
@@ -26,7 +25,8 @@ class ProfilePage extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Create Exam.',
+                  'Create an Exam.',
+                  style: Style.heading1,
                 ),
               ),
             ),

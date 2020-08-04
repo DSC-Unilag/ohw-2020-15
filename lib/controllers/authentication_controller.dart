@@ -6,9 +6,14 @@ export '../models/user.dart';
 
 class AuthController extends ChangeNotifier {
   User currentUser;
-  createNewAccount(User user) async {
-    ApiHandler apiHandler = ApiHandler();
-    var response = await apiHandler.registerUser(user);
+  createNewAccount(BuildContext context, User user) async {
+    // ApiHandler apiHandler = ApiHandler();
+    // var response = await apiHandler.registerUser(user);
+    Indicator.showLoading(context, 'Creating your account');
+    await Future.delayed(Duration(seconds: 5));
+    Indicator.closeLoading(context);
+    //  Indicator.showToast(context, 'Invalid username or password');
+    return OperationStatus.success;
   }
 
   loginUser(BuildContext context, String email, String password) async {
