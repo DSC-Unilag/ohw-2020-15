@@ -11,6 +11,14 @@ class AuthController extends ChangeNotifier {
     var response = await apiHandler.registerUser(user);
   }
 
+  loginUser(BuildContext context, String email, String password) async {
+    Indicator.showLoading(context, 'Signing you in');
+    await Future.delayed(Duration(seconds: 5));
+    Indicator.closeLoading(context);
+    Indicator.showToast(context, 'Invalid username or password');
+    return OperationStatus.success;
+  }
+
   checkDeviceForUser() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     final userEmail = sharedPreferences.getString('email');

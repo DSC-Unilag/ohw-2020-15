@@ -51,11 +51,14 @@ class ExamDataTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 8),
-          Text(
-            'Finals: Biomedical Engineering 2',
-            style: Style.heading1.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+          Row(
+            children: <Widget>[
+              SquareDot(),
+              Text(
+                'Finals: Biomedical Engineering 2',
+                style: Style.heading1.copyWith(),
+              ),
+            ],
           ),
           SizedBox(height: 16.0),
           Row(

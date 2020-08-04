@@ -69,8 +69,7 @@ class MakeAttemptScreen extends StatelessWidget {
                       style: Style.heading2,
                     ),
                     SizedBox(height: 40),
-                    //TODO:
-                    Placeholder(),
+                    AttemptQuestionWidget(),
                   ],
                 ),
               ),
@@ -101,6 +100,49 @@ class MakeAttemptScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AttemptQuestionWidget extends StatelessWidget {
+  final bool isMultiOption = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(bottom: 16),
+            constraints: BoxConstraints.tightFor(
+              width: double.maxFinite,
+            ),
+            child: Text(
+              "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+              style: Style.body1,
+            ),
+          ),
+          Text(
+            isMultiOption
+                ? 'Select all options that apply'
+                : 'Select only one (1) option',
+            style: Style.body3Bold,
+          ),
+          for (int i = 0; i < 3; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: <Widget>[
+                  CustomCheckBox(initialValue: false),
+                  Text(
+                    "A.  Option $i",
+                    style: Style.body2Bold,
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }

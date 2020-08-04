@@ -6,6 +6,12 @@ import '../../utilities/app_widgets.dart';
 import 'add_questions.dart';
 
 class CreateExamScreen extends StatelessWidget {
+  // Variables
+  final TextEditingController _examName = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+  final TextEditingController _instructions = TextEditingController();
+
+  //Functions
   addQuestionsToExam(BuildContext context) {
     Navigator.of(context).push(
       CupertinoPageRoute(
@@ -46,10 +52,12 @@ class CreateExamScreen extends StatelessWidget {
                     OverheadLabelTextField(
                       label: 'Exam Name',
                       hint: 'Enter the name of the Exam',
+                      controller: _examName,
                     ),
                     OverheadLabelTextField(
                       label: 'Description',
                       hint: 'Describe this test briefly',
+                      controller: _description,
                       minLines: 4,
                       maxLines: 6,
                     ),
@@ -164,6 +172,7 @@ class CreateExamScreen extends StatelessWidget {
                       label: 'Instructions',
                       hint:
                           'Leave instructions for students taking this test to read before they begin',
+                      controller: _instructions,
                       minLines: 4,
                       maxLines: 7,
                     ),

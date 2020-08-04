@@ -554,7 +554,7 @@ class CustomCheckBoxState extends State<CustomCheckBox> {
           ),
           SizedBox(width: 16),
           Text(
-            '${widget.choice}',
+            '${widget.choice ?? ''}',
             style: Style.body1Green,
           )
         ],
@@ -564,6 +564,9 @@ class CustomCheckBoxState extends State<CustomCheckBox> {
 }
 
 class SquareDot extends StatelessWidget {
+  final Color color;
+
+  const SquareDot([this.color]);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -571,7 +574,7 @@ class SquareDot extends StatelessWidget {
       width: 10,
       margin: EdgeInsets.fromLTRB(0, 4, 8, 4),
       decoration: BoxDecoration(
-        color: Style.themeGreen,
+        color: color ?? Style.themeGreen,
         borderRadius: BorderRadius.circular(2),
       ),
     );
