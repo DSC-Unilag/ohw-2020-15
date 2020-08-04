@@ -1,10 +1,10 @@
-import 'package:ExaminationAppOHW20/views/examination/exam_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../utilities/style.dart' as Style;
-import '../utilities/app_widgets.dart';
-import 'examination/create_exam.dart';
+import 'page_home.dart';
+import 'page_profile.dart';
+import '../../utilities/style.dart' as Style;
+import '../../utilities/app_widgets.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -13,7 +13,12 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int selectedTab = 1;
-  List<BottomNavigationBarItem> navigationButtons = [
+  List<Widget> pages = [
+    Container(),
+    HomePage(),
+    ProfilePage(),
+  ];
+  List<BottomNavigationBarItem> _navigationButtons = [
     BottomNavigationBarItem(
       title: Container(),
       icon: Icon(
@@ -40,28 +45,12 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Center(
-        child: FlatButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (_) => CreateExamScreen(),
-              ),
-            );
-          },
-          onLongPress: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (_) => ExamPageScreen(),
-              ),
-            );
-          },
-          child: Text(
-            'Create Exam. LongPress for exam screen',
-          ),
+      body: Container(
+        constraints: BoxConstraints.tightFor(
+          height: MediaQuery.of(context).size.height - kToolbarHeight - 40,
+          width: MediaQuery.of(context).size.width,
         ),
+        child: pages[selectedTab],
       ),
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
@@ -76,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
           //   color: Style.themeBlue,
           // ),
           // unselectedLabelStyle: Style.bodyLabelText,
-          items: navigationButtons,
+          items: _navigationButtons,
           currentIndex: selectedTab,
           onTap: (int pageIndex) async {
             setState(() {

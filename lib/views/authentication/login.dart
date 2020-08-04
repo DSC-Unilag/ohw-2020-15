@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'sign_up.dart';
-import '../dashboard.dart';
+import '../dashboard/dashboard.dart';
 import '../../utilities/style.dart' as Style;
 import '../../utilities/app_widgets.dart';
 
