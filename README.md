@@ -1,16 +1,13 @@
-# ExaminationAppOHW20
+# ohw-2020-15
 
-A new Flutter project.
+# Examination App
+### Team 15
 
-## Getting Started
+>MOBILE APPLICATION: https://ufile.io/b6catsn8
 
-This project is a starting point for a Flutter application.
+The exam page view randomly switches between any combination of these scenarios: examiner or student user, before or after exam opens, and before or after exam is graded.
 
-A few resources to get you started if this is your first Flutter project:
+## Files
+Working Document - https://docs.google.com/document/d/1k1ZIzuDXuax1GXxYNG9U9mg-SCiXaYVtbSXE6wr8R64/edit?usp=sharing
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Design File - https://www.figma.com/file/qneYbNzTvnLHfafUFKncjY/OHW-20-TEAM-15?node-id=0%3A1
