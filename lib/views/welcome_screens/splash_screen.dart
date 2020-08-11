@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   onAppStart(BuildContext context) async {
     final auth = Provider.of<AuthController>(context);
     //await auth.saveUserEmailOnDevice();
-    await auth.logoutFromDevice();
+    // await auth.logoutFromDevice();
     final userEmail = await auth.checkDeviceForUser();
     Widget route;
     if (userEmail == false)

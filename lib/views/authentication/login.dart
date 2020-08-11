@@ -11,12 +11,13 @@ class LoginScreen extends StatelessWidget {
 //Variables
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-  final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();
 
   //Functions
   _loginUser(BuildContext context, String email, String password) async {
-    AuthController _authController =
+    final AuthController _authController =
         Provider.of<AuthController>(context, listen: false);
+    await _authController.saveUserEmailOnDevice();
     OperationStatus status =
         await _authController.loginUser(context, email, password);
     if (status == OperationStatus.success) _gotoDashboard(context);
