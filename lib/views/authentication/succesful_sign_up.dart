@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../dashboard/dashboard.dart';
-import '../../utilities/style.dart' as Style;
+
 import '../../utilities/app_widgets.dart';
+import '../../utilities/style.dart' as Style;
+import '../dashboard/dashboard.dart';
 
 class SuccesfulSignUpScreen extends StatelessWidget {
   _gotoDashboard(BuildContext context) {

@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
-import '../authentication/succesful_sign_up.dart';
-import '../../utilities/style.dart' as Style;
-import '../../utilities/app_widgets.dart';
+
 import '../../controllers/authentication_controller.dart';
+import '../../models/user.dart';
+import '../../utilities/app_widgets.dart';
+import '../../utilities/style.dart' as Style;
+import '../authentication/succesful_sign_up.dart';
+import 'login.dart';
 
 class SignUpScreen extends StatelessWidget {
   //Variables
