@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "108757066809",
+    "firebase_url": "https://chief-examiner.firebaseio.com",
+    "project_id": "chief-examiner",
+    "storage_bucket": "chief-examiner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108757066809:android:061709675ef283554359e8",
+        "android_client_info": {
+          "package_name": "com.majore.chiefexaminer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108757066809-rbf5i77fhs2gdmdkbp1oqr505035r81q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTfLUIOGNpQ5jKhMlVExb23BwFMy_rPZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108757066809-rbf5i77fhs2gdmdkbp1oqr505035r81q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
