@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/a_models.dart';
+import 'a_data.dart';
 
 class RegistrationData {
   static List<Registration> userRegistrations = [];

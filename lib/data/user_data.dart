@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/a_models.dart';
+import 'a_data.dart';
 
 class UserData {
   fetchEmailOnDevice() async {
@@ -21,35 +22,37 @@ class UserData {
   }
 
   getUserByEmail(String email) async {
-    final database = Firestore.instance;
-    return await database
+    final _database = Firestore.instance;
+    return await _database
         .collection('Users')
         .where('email', isEqualTo: email)
         .limit(1)
         .getDocuments()
         .then(
       (response) {
-        if (response.documents != null) {
+        if (response.documents.isNotEmpty) {
           return User.fromJson(response.documents.first.data);
         } else
           return OperationStatus.fail;
       },
-    ).catchError(() => OperationStatus.error);
+    ).catchError((e) => OperationStatus.error);
   }
 
   saveNewUser(User user) async {
-    final database = Firestore.instance;
+    final _database = Firestore.instance;
     var b = await getUserByEmail(user.email);
-    if (b != OperationStatus) {
+    if (b == OperationStatus.error) {
+      return OperationStatus.error;
+    } else if (b != OperationStatus.fail) {
       return OperationStatus.fail;
     } else {
-      return await database
+      return await _database
           .collection('Users')
-          .document('${user.id}')
+          .document('${user.email}')
           .setData(user.toJson())
           .then((_) {
         return OperationStatus.success;
-      }).catchError(() => OperationStatus.error);
+      }).catchError((e) => OperationStatus.error);
     }
   }
 }

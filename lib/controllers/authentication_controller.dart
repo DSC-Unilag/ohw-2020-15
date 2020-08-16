@@ -1,42 +1,69 @@
-import '../data/a_data.dart';
 import 'package:ExaminationAppOHW20/utilities/network.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/a_data.dart';
 import '../models/user.dart';
 
 class AuthController extends ChangeNotifier {
   final userData = UserData();
-  User currentUser;
-  createNewAccount(BuildContext context, User user) async {
-    // ApiHandler apiHandler = ApiHandler();
-    // var response = await apiHandler.registerUser(user);
+  User currentUser = User();
+  Future<OperationStatus> createNewAccount(BuildContext context, User user) async {
+    String now = DateTime.now()
+        .toIso8601String()
+        .replaceFirst('T', ' ')
+        .substring(0, 16);
+    user.createdAt = now;
+    user.updatedAt = now;
+
     Indicator.showLoading(context, 'Creating your account');
-    await Future.delayed(Duration(seconds: 5));
+    OperationStatus status = await userData.saveNewUser(user);
     Indicator.closeLoading(context);
-    //  Indicator.showToast(context, 'Invalid username or password');
-    return OperationStatus.success;
+
+    if (status == OperationStatus.success) {
+      Indicator.showToast('Account created');
+      await userData.saveEmailOnDevice(user.email);
+      currentUser = user;
+    } else if (status == OperationStatus.fail) {
+      Indicator.showToast('This email is connected to another user');
+    } else if (status == OperationStatus.error) {
+      Indicator.showToast('An error occured! Try again', Colors.redAccent);
+    }
+    return status;
   }
 
-  loginUser(BuildContext context, String email, String password) async {
+  Future<OperationStatus> loginUser(BuildContext context, String email, String password) async {
     Indicator.showLoading(context, 'Signing you in');
-    await Future.delayed(Duration(seconds: 5));
+    var response = await userData.getUserByEmail(email);
     Indicator.closeLoading(context);
-    Indicator.showToast(context, 'Invalid username or password');
-    return OperationStatus.success;
+    
+    if (response == OperationStatus.fail) {
+      Indicator.showToast('User not found');
+      return OperationStatus.error;
+    } else {
+      if (password == response.password) {
+        currentUser = response;
+        return OperationStatus.success;
+      } else {
+        Indicator.showToast('Incorrect email/password');
+        return OperationStatus.fail;
+      }
+    }
   }
 
   saveUserEmailOnDevice() {
-    userData.saveEmailOnDevice('ex@ex.com');
+    userData.saveEmailOnDevice('${currentUser.email}');
   }
 
-  checkDeviceForUser() {
-    userData.fetchEmailOnDevice();
+  checkDeviceForUser() async {
+    var email = await userData.fetchEmailOnDevice();
+    if (email != OperationStatus.fail) currentUser.email = email;
+    return email;
   }
 
   logoutFromDevice() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
+    currentUser = User();
   }
 }
-
-enum OperationStatus { success, failed }

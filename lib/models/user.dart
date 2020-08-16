@@ -3,6 +3,7 @@ class User {
   String email;
   String firstName;
   String lastName;
+  String password;
   String createdAt;
   String updatedAt;
 
@@ -11,6 +12,7 @@ class User {
       this.email,
       this.firstName,
       this.lastName,
+      this.password,
       this.createdAt,
       this.updatedAt});
 
@@ -19,6 +21,7 @@ class User {
     email = json['email'];
     firstName = json['firstName'];
     lastName = json['lastName'];
+    password = json['password'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -29,6 +32,7 @@ class User {
     data['email'] = this.email;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
+    data['password'] = this.password;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
