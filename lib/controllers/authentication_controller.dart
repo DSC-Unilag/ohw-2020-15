@@ -1,10 +1,11 @@
+import '../data/a_data.dart';
 import 'package:ExaminationAppOHW20/utilities/network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
-export '../models/user.dart';
 
 class AuthController extends ChangeNotifier {
+  final userData = UserData();
   User currentUser;
   createNewAccount(BuildContext context, User user) async {
     // ApiHandler apiHandler = ApiHandler();
@@ -24,19 +25,12 @@ class AuthController extends ChangeNotifier {
     return OperationStatus.success;
   }
 
-  checkDeviceForUser() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final userEmail = sharedPreferences.getString('email');
-    if (userEmail == null) {
-      return false;
-    } else {
-      return userEmail;
-    }
+  saveUserEmailOnDevice() {
+    userData.saveEmailOnDevice('ex@ex.com');
   }
 
-  saveUserEmailOnDevice() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('email', 'emmanuel@ohw.com');
+  checkDeviceForUser() {
+    userData.fetchEmailOnDevice();
   }
 
   logoutFromDevice() async {
