@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../controllers/authentication_controller.dart';
 import '../../models/user.dart';
 import '../../utilities/app_widgets.dart';
+import '../../utilities/constants.dart';
 import '../../utilities/style.dart' as Style;
 import '../authentication/succesful_sign_up.dart';
 import 'login.dart';
@@ -67,39 +69,66 @@ class SignUpScreen extends StatelessWidget {
                     label: 'First Name',
                     hint: 'Isaac',
                     controller: _firstName,
+                    validator: (String value) {
+                      return value.isEmpty ? "Field cannot be empty" : null;
+                    },
                   ),
                   SizedBox(height: 8),
                   RegularLabelTextField(
                     label: 'Last Name',
                     hint: 'Newton',
                     controller: _lastName,
+                    validator: (String value) {
+                      return value.isEmpty ? "Field cannot be empty" : null;
+                    },
                   ),
                   SizedBox(height: 8),
                   RegularLabelTextField(
                     label: 'Email Address',
                     hint: 'isaacwonder@gmail.com',
                     controller: _email,
+                    validator: (String value) {
+                      if (value.isEmpty)
+                        return "Field cannot be empty";
+                      else if (!value.contains('@') || !value.contains('.'))
+                        return "Enter a valid email";
+                      else
+                        return null;
+                    },
                   ),
                   SizedBox(height: 8),
                   PasswordField(
                     label: 'Password',
                     hint: 'Enter the password for your account',
                     controller: _password,
+                    validator: (String value) {
+                      return value.isEmpty ? "Field cannot be empty" : null;
+                    },
                   ),
                   SizedBox(height: 8),
                   PasswordField(
                     label: 'Confirm Password',
                     hint: 'Confirm your password',
                     controller: _confirmPassword,
+                    validator: (String value) {
+                      return value != _password.text
+                          ? "Password do not match"
+                          : null;
+                    },
                   ),
                   SizedBox(height: 16),
                   BigButton(
                     label: 'Sign Up',
                     onTap: () async {
                       if (_signUpForm.currentState.validate()) {
-                        //TODO: create with input data
-                        User newAccount = User();
-                        AuthController _authController = AuthController();
+                        User newAccount = User(
+                          email: _email.text.trim().toLowerCase(),
+                          firstName: _firstName.text.trim(),
+                          lastName: _lastName.text.trim(),
+                          password: _password.text.trim(),
+                        );
+                        AuthController _authController =
+                            Provider.of<AuthController>(context, listen: false);
                         OperationStatus status = await _authController
                             .createNewAccount(context, newAccount);
                         if (status == OperationStatus.success)

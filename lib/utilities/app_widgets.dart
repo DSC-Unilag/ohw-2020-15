@@ -251,6 +251,8 @@ class OverheadLabelTextField extends StatelessWidget {
             expands: canGrow,
             cursorColor: Style.themeBlue,
             style: Style.body2,
+            validator: validator,
+            controller: controller,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: Style.fieldHintTextStyle,
@@ -304,6 +306,8 @@ class RegularLabelTextField extends StatelessWidget {
         expands: canGrow,
         cursorColor: Style.themeBlue,
         style: Style.body2,
+        validator: validator,
+        controller: controller,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: Style.fieldLabelTextStyle,
@@ -358,6 +362,8 @@ class _PasswordFieldState extends State<PasswordField> {
         obscureText: obscure,
         cursorColor: Style.themeBlue,
         style: Style.body2.copyWith(letterSpacing: obscure ? 4 : 0),
+        validator: widget.validator,
+        controller: widget.controller,
         decoration: InputDecoration(
           suffixIconConstraints: BoxConstraints.tightFor(height: 32),
           suffixIcon: IconButton(

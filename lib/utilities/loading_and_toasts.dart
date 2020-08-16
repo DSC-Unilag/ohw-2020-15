@@ -45,7 +45,7 @@ class Indicator {
     Navigator.of(context).pop();
   }
 
-  static showToast(BuildContext context, String message, [Color color]) {
+  static showToast(String message, [Color color]) {
     Fluttertoast.showToast(
       backgroundColor: color == null ? Style.themeBlueLight : color,
       fontSize: 14,

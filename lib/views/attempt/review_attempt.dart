@@ -12,7 +12,7 @@ class ReviewAttemptScreen extends StatelessWidget {
     Indicator.showLoading(context);
     await Future.delayed(Duration(seconds: 4))
         .then((value) => Indicator.closeLoading(context));
-    Indicator.showToast(context, 'Submitted');
+    Indicator.showToast('Submitted');
     Navigator.push(
       context,
       CupertinoPageRoute(
