@@ -46,14 +46,6 @@ class UserData {
     } else if (b != OperationStatus.fail) {
       return OperationStatus.fail;
     } else {
-      //TODO generate id for user
-      String now = DateTime.now()
-          .toIso8601String()
-          .replaceFirst('T', ' ')
-          .substring(0, 16);
-      user.createdAt = now;
-      user.updatedAt = now;
-      print(user.toJson());
       return await _database
           .collection('Users')
           .document('${user.email}')

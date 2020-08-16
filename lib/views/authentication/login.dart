@@ -13,16 +13,19 @@ class LoginScreen extends StatelessWidget {
 //Variables
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-  // final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();
 
   //Functions
   _loginUser(BuildContext context, String email, String password) async {
     final AuthController _authController =
         Provider.of<AuthController>(context, listen: false);
-    await _authController.saveUserEmailOnDevice();
+
     OperationStatus status =
         await _authController.loginUser(context, email, password);
-    if (status == OperationStatus.success) _gotoDashboard(context);
+    if (status == OperationStatus.success) {
+      _gotoDashboard(context);
+      _authController.saveUserEmailOnDevice();
+    }
   }
 
   _gotoSignUpScreen(BuildContext context) {
@@ -55,41 +58,57 @@ class LoginScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width.clamp(150.00, 400.0),
           ),
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  Style.OhwExamAppIcons.ohwExamAppIcon,
-                  size: 72,
-                  color: Style.themeGreen,
-                ),
-                Spacer(),
-                Text(
-                  'Welcome back!',
-                  style: Style.body2Bold.copyWith(fontSize: 20),
-                ),
-                SizedBox(height: 40),
-                RegularLabelTextField(
-                  label: 'Email Address',
-                  hint: 'bobby@axelrod.com',
-                  controller: _email,
-                ),
-                SizedBox(height: 16),
-                PasswordField(
-                  label: 'Password',
-                  hint: 'Enter the password for your account',
-                  controller: _password,
-                ),
-                SizedBox(height: 16),
-                BigButton(
-                  label: 'Sign In',
-                  onTap: () {
-                    _loginUser(
-                        context, _email.text.trim(), _password.text.trim());
-                  },
-                ),
-                Spacer(),
-              ],
+            child: Form(
+              key: _loginForm,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Style.OhwExamAppIcons.ohwExamAppIcon,
+                    size: 72,
+                    color: Style.themeGreen,
+                  ),
+                  Spacer(),
+                  Text(
+                    'Welcome back!',
+                    style: Style.body2Bold.copyWith(fontSize: 20),
+                  ),
+                  SizedBox(height: 40),
+                  RegularLabelTextField(
+                    label: 'Email Address',
+                    hint: 'bobby@axelrod.com',
+                    controller: _email,
+                    validator: (String value) {
+                      if (value.isEmpty)
+                        return "Field cannot be empty";
+                      else if (!value.contains('@') || !value.contains('.'))
+                        return "Enter a valid email";
+                      else
+                        return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  PasswordField(
+                    label: 'Password',
+                    hint: 'Enter the password for your account',
+                    controller: _password,
+                    validator: (String value) {
+                      return value.isEmpty ? "Enter your password" : null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  BigButton(
+                    label: 'Sign In',
+                    onTap: () {
+                      if (_loginForm.currentState.validate()) {
+                        _loginUser(
+                            context, _email.text.trim(), _password.text.trim());
+                      }
+                    },
+                  ),
+                  Spacer(),
+                ],
+              ),
             ),
           ),
         ),

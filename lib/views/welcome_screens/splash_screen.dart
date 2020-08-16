@@ -1,20 +1,19 @@
-import 'package:ExaminationAppOHW20/controllers/authentication_controller.dart';
-import 'package:ExaminationAppOHW20/views/authentication/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'onboarding.dart';
+import '../../controllers/authentication_controller.dart';
+import '../../data/a_data.dart';
 import '../../utilities/style.dart' as Style;
+import '../../views/authentication/login.dart';
+import 'onboarding.dart';
 
 class SplashScreen extends StatelessWidget {
   onAppStart(BuildContext context) async {
     final auth = Provider.of<AuthController>(context);
-    //await auth.saveUserEmailOnDevice();
-    // await auth.logoutFromDevice();
     final userEmail = await auth.checkDeviceForUser();
     Widget route;
-    if (userEmail == false)
+    if (userEmail == OperationStatus.fail)
       route = OnboardingScreen();
     else
       route = LoginScreen();

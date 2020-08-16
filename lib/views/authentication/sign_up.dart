@@ -20,6 +20,23 @@ class SignUpScreen extends StatelessWidget {
   final GlobalKey<FormState> _signUpForm = GlobalKey<FormState>();
 
   //Functions
+  _signUpUser(BuildContext context) async {
+    if (_signUpForm.currentState.validate()) {
+      User newAccount = User(
+        email: _email.text.trim().toLowerCase(),
+        firstName: _firstName.text.trim(),
+        lastName: _lastName.text.trim(),
+        password: _password.text.trim(),
+      );
+      AuthController _authController =
+          Provider.of<AuthController>(context, listen: false);
+      OperationStatus status =
+          await _authController.createNewAccount(context, newAccount);
+      if (status == OperationStatus.success)
+        _gotoSuccesfulSignUpScreen(context);
+    }
+  }
+
   _gotoLoginScreen(BuildContext context) {
     Navigator.of(context).push(
       CupertinoPageRoute(
@@ -118,24 +135,10 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   BigButton(
-                    label: 'Sign Up',
-                    onTap: () async {
-                      if (_signUpForm.currentState.validate()) {
-                        User newAccount = User(
-                          email: _email.text.trim().toLowerCase(),
-                          firstName: _firstName.text.trim(),
-                          lastName: _lastName.text.trim(),
-                          password: _password.text.trim(),
-                        );
-                        AuthController _authController =
-                            Provider.of<AuthController>(context, listen: false);
-                        OperationStatus status = await _authController
-                            .createNewAccount(context, newAccount);
-                        if (status == OperationStatus.success)
-                          _gotoSuccesfulSignUpScreen(context);
-                      }
-                    },
-                  ),
+                      label: 'Sign Up',
+                      onTap: () {
+                        _signUpUser(context);
+                      }),
                   Spacer(),
                 ],
               ),

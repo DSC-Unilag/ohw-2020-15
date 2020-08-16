@@ -7,11 +7,19 @@ import '../models/user.dart';
 
 class AuthController extends ChangeNotifier {
   final userData = UserData();
-  User currentUser;
-  createNewAccount(BuildContext context, User user) async {
+  User currentUser = User();
+  Future<OperationStatus> createNewAccount(BuildContext context, User user) async {
+    String now = DateTime.now()
+        .toIso8601String()
+        .replaceFirst('T', ' ')
+        .substring(0, 16);
+    user.createdAt = now;
+    user.updatedAt = now;
+
     Indicator.showLoading(context, 'Creating your account');
     OperationStatus status = await userData.saveNewUser(user);
     Indicator.closeLoading(context);
+
     if (status == OperationStatus.success) {
       Indicator.showToast('Account created');
       await userData.saveEmailOnDevice(user.email);
@@ -24,24 +32,38 @@ class AuthController extends ChangeNotifier {
     return status;
   }
 
-  loginUser(BuildContext context, String email, String password) async {
+  Future<OperationStatus> loginUser(BuildContext context, String email, String password) async {
     Indicator.showLoading(context, 'Signing you in');
-    await Future.delayed(Duration(seconds: 5));
+    var response = await userData.getUserByEmail(email);
     Indicator.closeLoading(context);
-    Indicator.showToast('Invalid username or password');
-    return OperationStatus.success;
+    
+    if (response == OperationStatus.fail) {
+      Indicator.showToast('User not found');
+      return OperationStatus.error;
+    } else {
+      if (password == response.password) {
+        currentUser = response;
+        return OperationStatus.success;
+      } else {
+        Indicator.showToast('Incorrect email/password');
+        return OperationStatus.fail;
+      }
+    }
   }
 
   saveUserEmailOnDevice() {
-    userData.saveEmailOnDevice('ex@ex.com');
+    userData.saveEmailOnDevice('${currentUser.email}');
   }
 
-  checkDeviceForUser() {
-    userData.fetchEmailOnDevice();
+  checkDeviceForUser() async {
+    var email = await userData.fetchEmailOnDevice();
+    if (email != OperationStatus.fail) currentUser.email = email;
+    return email;
   }
 
   logoutFromDevice() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
+    currentUser = User();
   }
 }
